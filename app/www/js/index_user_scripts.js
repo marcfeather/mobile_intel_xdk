@@ -31,7 +31,7 @@
         }
         
         /* Quando passar para o mobile ou publicar, mudar o nome abaixo "localhost" para o IP do servidor onde irá ficar os arquivos php */
-        var url = "http://localhost/mobile_service/login_mobile.php?get_rows=json&login="+login_dados.login+"&password="+login_dados.password;
+        var url = "http://localhost/mobile_intel_xdk/login_mobile.php?get_rows=json&login="+login_dados.login+"&password="+login_dados.password;
 	
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, false);
@@ -54,7 +54,18 @@
 					"login": json.result[0][3],
             };
             
-            navigator.notification.alert("Bem vindo, "+login_session.name+"!","Alerta");
+            // Seta o localstorage para esse login
+            localStorage.setItem('username',login_session.name);
+            localStorage.setItem('login',login_session.login);
+            localStorage.setItem('email',login_session.email);
+            localStorage.setItem('password',login_dados.password);
+            
+            // Verifica se o localStorage foi feito, alem de dar boas vindas :D
+            navigator.notification.alert("Bem vindo, "+localStorage.getItem('username')+"!","Alerta");
+            
+            /* Para saber se determinada chave existe 
+                if (localStorage.getItem("username") === null) {}
+            */
             
             // A funçao abaixo que deveria redirecionar para a subpage #car_list não está funcionando
             // $.ui.loadContent("#car_list",false,false,"fade");
