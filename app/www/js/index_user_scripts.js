@@ -1,3 +1,17 @@
+/*
+    Verifica se o usuario esta logado
+    @return True => Caso o usuario esteja logado
+    @return False => Caso contrario
+    @note => Utilizacao nao recomendada na pagina de login ou na pagina principal
+*/
+function verifica_login() {
+    if (localStorage.getItem("username") !== null) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 /*jshint browser:true */
 /*global $ */(function()
 {
@@ -7,12 +21,10 @@
  */
  function register_event_handlers()
  {
-     
-     var login_session;
-    
      /* button  #btn_login */
     $(document).on("click", "#btn_login", function(evt)
     {
+        
 		var login_dados = {
 			"login": document.getElementById("txt_login").value,
 			"password": document.getElementById("txt_password").value, /** Será convertido em md5 dentro do php (Temporariamente, pensar em outra forma de criptografia). **/
@@ -31,10 +43,10 @@
         }
         
         /* Quando passar para o mobile ou publicar, mudar o nome abaixo "localhost" para o IP do servidor onde irá ficar os arquivos php */
-        var url = "http://localhost/mobile_intel_xdk/login_mobile.php?get_rows=json&login="+login_dados.login+"&password="+login_dados.password;
+        var _url = "http://localhost/mobile_intel_xdk/login_mobile.php?get_rows=json&login="+login_dados.login+"&password="+login_dados.password;
 	
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, false);
+        xhr.open("GET", _url, false);
         xhr.onload = function(){
         
         if(xhr.status == 200)
@@ -48,7 +60,7 @@
             
             var json = JSON.parse(json_string);
             
-            login_session = {
+            var login_session = {
 					"name": json.result[0][1],
 					"email": json.result[0][2],
 					"login": json.result[0][3],
@@ -63,11 +75,7 @@
             // Verifica se o localStorage foi feito, alem de dar boas vindas :D
             navigator.notification.alert("Bem vindo, "+localStorage.getItem('username')+"!","Alerta");
             
-            /* Para saber se determinada chave existe 
-                if (localStorage.getItem("username") === null) {}
-            */
-            
-            // A funçao abaixo que deveria redirecionar para a subpage #car_list não está funcionando
+            // Erro no redirecionamento => Nao redireciona
             // $.ui.loadContent("#car_list",false,false,"fade");
             
         }
