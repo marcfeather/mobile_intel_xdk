@@ -72,14 +72,10 @@ function verifica_login() {
             localStorage.setItem('email',login_session.email);
             localStorage.setItem('password',login_dados.password);
             
-            // Verifica se o localStorage foi feito, alem de dar boas vindas :D
             //navigator.notification.alert("Bem vindo, "+localStorage.getItem('username')+"!","Alerta");
             
-            // Opções de redirecionamento que ja testei e nao funcionaram
-            $.ui.loadContent("#car_list");
-            //af.ui.loadContent("#car_list");
-            //activate_page("#car_list");
-            //activate_subpage("#car_list");
+            // Redireciona para a pagina de lista
+            window.location.href = "car_list.html";
             
         }
         else if(xhr.status == 404)
