@@ -2,7 +2,7 @@
     Verifica se o usuario esta logado
     @return True => Caso o usuario esteja logado
     @return False => Caso contrario
-    @note => Utilizacao nao recomendada na pagina de login ou na pagina principal
+    @note => Utilizacao nao recomendada nas seguintes paginas: #car_list, #car_list_view, #login
 */
 function verifica_login() {
     if (localStorage.getItem("username") !== null) {
@@ -73,19 +73,22 @@ function verifica_login() {
             localStorage.setItem('password',login_dados.password);
             
             // Verifica se o localStorage foi feito, alem de dar boas vindas :D
-            navigator.notification.alert("Bem vindo, "+localStorage.getItem('username')+"!","Alerta");
+            //navigator.notification.alert("Bem vindo, "+localStorage.getItem('username')+"!","Alerta");
             
-            // Erro no redirecionamento => Nao redireciona
-            // $.ui.loadContent("#car_list",false,false,"fade");
+            // Opções de redirecionamento que ja testei e nao funcionaram
+            $.ui.loadContent("#car_list");
+            //af.ui.loadContent("#car_list");
+            //activate_page("#car_list");
+            //activate_subpage("#car_list");
             
         }
         else if(xhr.status == 404)
         {
-            navigator.notification.alert("Web Service Doesn't Exist", "Error");
+            navigator.notification.alert("Web Service Não Existe.", "Erro");
         }
         else
         {
-            navigator.notification.alert("Unknown error occured while connecting to server", "Error");
+            navigator.notification.alert("Erro desconhecido durante a comunicação com o servidor.", "Erro");
         }
         };
         xhr.send();
